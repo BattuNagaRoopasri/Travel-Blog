@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog - Gallery</title>
+    <link rel="stylesheet" href="gallery.css">
+</head>
+
+<body>
+    <header>
+        <h1>Travel Blog</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="travel stories.html">Travel Stories</a></li>
+                <li><a href="tips.html">Travel Tips</a></li>
+                <li><a href="gallery page.html">Gallery</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="gallery-intro">
+        <h1>Explore the World Through Our Lens</h1>
+        <p>
+            Welcome to our travel gallery, where each photo tells a story of adventure, culture, and breathtaking landscapes. From tranquil beaches to bustling cityscapes, our collection features some of the most mesmerizing destinations from around the globe. Whether
+            you’re seeking inspiration for your next getaway or simply want to explore new places virtually, our gallery has something for every travel enthusiast.
+        </p>
+        <p>
+            Scroll through the collection, click on the images for a closer look, and immerse yourself in the beauty of the world. Each destination is unique, offering its own charm, history, and unforgettable experiences. Who knows? Your next travel destination
+            might be just one click away!
+        </p>
+    </section>
+
+
+    <section class="gallery">
+        <div class="gallery-grid">
+            <div class="image-container">
+                <img src="tajmahal.jpg" alt="Santorini, Greece" class="gallery-img">
+                <p class="caption">Taj Mahal: "The timeless symbol of love and architectural grandeur, standing proudly in Agra, India."</p>
+            </div>
+
+            <div class="image-container">
+                <img src="Rome.jpg" alt="Kyoto, Japan" class="gallery-img">
+                <p class="caption">Rome: "Discover the Eternal City, where ancient history and modern culture blend seamlessly. "</p>
+            </div>
+            <div class="image-container">
+                <img src="bali.jpg" alt="Venice, Italy" class="gallery-img">
+                <p class="caption"> Bali: "Indonesia's island of gods,A tropical paradise of lush landscapes, vibrant culture"</p>
+            </div>
+            <div class="image-container">
+                <img src="beach(dest).jpg" alt="Iceland" class="gallery-img">
+                <p class="caption"> Beach: "Serene waves and the golden sands invite you to relax and unwind by the sea. "</p><br>
+            </div>
+
+
+        </div>
+        <div id="lightbox" class="lightbox">
+            <span class="close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img" src="" alt="">
+            <button class="prev" id="prev-btn">&#10094;</button>
+            <button class="next" id="next-btn">&#10095;</button>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Travel Blog. All rights reserved.</p>
+    </footer>
+
+    <script src="gallery.js"></script>
+</body>
+
+</html>

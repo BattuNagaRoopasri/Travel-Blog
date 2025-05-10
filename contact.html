@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with us for inquiries, collaborations, or travel tips.">
+    <title>Contact Us - Travel Blog</title>
+    <style>
+        /* Global Styles */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* Header Section */
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        /* Contact Section */
+        
+        .contact-section {
+            padding: 4rem 2rem;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-section p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info p {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Contact Form Styles */
+        
+        .container {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #b5e4ec;
+            border-radius: 8px;
+            background-color: #fafafaae;
+            text-align: center;
+            margin: 0 auto;
+        }
+        /* Footer Section */
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <h1>Travel Blog</h1>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="travel stories.html">Travel Stories</a></li>
+                <li><a href="tips.html">Travel Tips</a></li>
+                <li><a href="gallery page.html">Gallery</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="About.html">About </a></li>
+                <li><a href="contact.html">Contact </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2>Contact Us</h2>
+        <p>We'd love to hear from you! Whether you have a question, want to collaborate, or need travel advice, feel free to get in touch.</p>
+
+        <div class="contact-info">
+            <h3>Our Contact Details</h3>
+            <p><strong>Email:</strong> info@travelblog.com</p>
+            <p><strong>Location:</strong> 123 Travel Lane, Adventure City, World</p>
+        </div>
+
+        <h3>Send Us a Message</h3>
+        <div class="container">
+
+            <!-- Contact Form -->
+            <form id="contactForm">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="5" required></textarea><br><br>
+
+                <input type="submit" value="Send Message">
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Travel Blog. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevents the default form submission
+
+            // Simulating form submission (in a real scenario, you'd send the data to a server)
+            alert('Message sent successfully!');
+
+            // Redirect back to contact page
+            window.location.href = 'contact.html';
+        });
+    </script>
+
+</body>
+
+</html>
