@@ -1,0 +1,15 @@
+{
+  "name": "travelblog-fullstack",
+  "version": "1.0.0",
+  "description": "Travel Blog Fullstack Project",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.13"
+  }
+}

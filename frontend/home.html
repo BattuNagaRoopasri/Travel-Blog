@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <meta name=" description " content="">
+    <meta name=" viewport " content="width=device-width, initial-scale=1.0 ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="flex">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="travel stories.html">Travel Stories</a></li>
+                    <li><a href="tips.html">Travel Tips</a></li>
+                    <li><a href="gallery page.html">Gallery</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="About.html">About Me</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-title">
+
+                <h1>Travel Blog</h1>
+                <p>Explore the world through our travel blog. Discover new destinations, read about exciting adventures,
+                    and plan your next vacation.</p>
+            </div>
+            <div class="header-form">
+                <h2>Choose your Travel location:</h2>
+                <form class="flex" id="searchForm">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Destination name">
+                    <input type="date" class="form-control" placeholder="Date">
+                    <input type="number" class="form-control" placeholder="Price($)">
+                    <input type="submit" class="btn" value="Search">
+                </form>
+            </div>
+        </div>
+    </header>
+    <h2>Featured Destinations</h2>
+    <div class="wrapper" id="destinations-wrapper">
+        <!-- Destinations will be loaded here dynamically from the backend -->
+    </div>
+    <section id="blog-posts" class="blog-section">
+        <h2>Popular Blog Posts</h2>
+        <div class="blog-container">
+            <div class="blog-post">
+                <img src="adventure.jpg" alt="Adventure">
+                <h3>10 Must-Do Adventures Around the World</h3>
+                <p>From hiking in the Himalayas to diving in the Great Barrier Reef, explore the top adventures that
+                    will leave you breathless.<span class="more-text" style="display: none;"> We have curated a special list of activities including bungee jumping in New Zealand, trekking in Patagonia, and white-water rafting in Costa Rica. These experiences will give you an adrenaline rush of a lifetime!</span></p>
+                <button class="btn" onclick="toggleReadMore(this)">Read More</button>
+            </div>
+            <div class="blog-post">
+                <img src="culture.jpg" alt="Culture">
+                <h3>Exploring the Hidden Gems of European Cities</h3>
+                <p>Discover lesser-known European cities brimming with charm, history, and hidden gems waiting to be
+                    explored.<span class="more-text" style="display: none;"> Uncover the beautiful cobbled streets of Bruges, the medieval architecture of Tallinn, and the breathtaking coastal views of Sintra. Skip the crowded capitals and experience the true essence of European culture.</span></p>
+                <button class="btn" onclick="toggleReadMore(this)">Read More</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Travel Blog. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Read More Functionality
+        function toggleReadMore(button) {
+            const moreText = button.previousElementSibling.querySelector('.more-text');
+            if (moreText.style.display === 'none' || moreText.style.display === '') {
+                moreText.style.display = 'inline';
+                button.textContent = 'Read Less';
+            } else {
+                moreText.style.display = 'none';
+                button.textContent = 'Read More';
+            }
+        }
+
+        // Search and Fetch Destinations Functionality
+        const wrapper = document.getElementById('destinations-wrapper');
+
+        async function fetchDestinations(searchTerm = '') {
+            try {
+                const response = await fetch(`/api/destinations?search=${encodeURIComponent(searchTerm)}`);
+                const destinations = await response.json();
+                
+                wrapper.innerHTML = ''; // Clear previous results
+
+                if (destinations.length === 0) {
+                    wrapper.innerHTML = `<h3 style="text-align:center; width:100%; color:#e74c3c; padding:2rem;">Oops! No destinations found for your search.</h3>`;
+                    return;
+                }
+
+                destinations.forEach(dest => {
+                    const box = document.createElement('div');
+                    box.className = 'box';
+                    box.innerHTML = `
+                        <img src="${dest.image}" alt="${dest.name}">
+                        <div class="content">
+                            <h3>${dest.name} <span style="font-size:1rem; color:#7f8c8d;">(${dest.country})</span></h3>
+                            <p>${dest.description}</p>
+                        </div>
+                    `;
+                    wrapper.appendChild(box);
+                });
+            } catch (error) {
+                console.error("Error fetching destinations:", error);
+                wrapper.innerHTML = `<h3 style="text-align:center; width:100%; color:#e74c3c; padding:2rem;">Failed to load destinations. Is the backend server running?</h3>`;
+            }
+        }
+
+        // Initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchDestinations();
+        });
+
+        // Search form submit event
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent page reload
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            fetchDestinations(searchTerm);
+            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    </script>
+</body>
+
+</html>

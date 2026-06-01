@@ -1,0 +1,111 @@
+/* tips.css */
+
+.tips-section {
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    position: relative;
+}
+
+.tips-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, #a06e42, #111111);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.tips-section h2::after {
+    content: '';
+    width: 0;
+    height: 4px;
+    background: #111111; /* Changed from blue to black */
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.tips-section h2:hover::after {
+    width: 100%;
+}
+
+
+
+
+
+.tips-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.tip {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+
+
+.tip:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.tip h3 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.tip p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Add entry animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tip {
+    animation: fadeInUp 0.7s ease-out forwards;
+    opacity: 0;
+}
+
+.tip:nth-child(1) { animation-delay: 0.1s; }
+.tip:nth-child(2) { animation-delay: 0.2s; }
+.tip:nth-child(3) { animation-delay: 0.3s; }
+.tip:nth-child(4) { animation-delay: 0.4s; }
+.tip:nth-child(5) { animation-delay: 0.5s; }
+.tip:nth-child(6) { animation-delay: 0.6s; }
+.tip:nth-child(7) { animation-delay: 0.7s; }
+.tip:nth-child(8) { animation-delay: 0.8s; }
