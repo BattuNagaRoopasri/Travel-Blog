@@ -308,9 +308,14 @@ body.dark-mode footer {
     font-size: 1.3rem;
     color: #fff;
     margin-left: 10px;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
     transform: scale(1.2);
+}
+
+.theme-toggle.fa-sun {
+    color: #f1c40f !important; /* Orange-yellow sun */
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.6);
 }

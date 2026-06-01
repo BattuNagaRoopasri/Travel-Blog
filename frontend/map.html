@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Travel Map</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map-container {
+            width: 90%;
+            height: 70vh;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 5px solid white;
+            transition: all 0.3s ease;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .map-header {
+            text-align: center;
+            padding: 3rem 1rem 1rem 1rem;
+        }
+        .map-header h2 {
+            font-size: 2.5rem;
+            color: #222;
+        }
+        .map-header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        /* Dark mode support */
+        body.dark-mode { background-color: #121212; color: #fff; }
+        body.dark-mode .map-header h2 { color: #fff; }
+        body.dark-mode .map-header p { color: #ccc; }
+        body.dark-mode #map-container { border-color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* Nav style override for minimal header */
+        .minimal-header {
+            min-height: 10vh !important;
+            padding-top: 2rem !important;
+            background: #222 !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="flex minimal-header">
+        <div class="container">
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="map.html" style="color: aqua;">Travel Map</a></li>
+                    <li><a href="travel stories.html">Stories</a></li>
+                    <li><a href="tips.html">Tips</a></li>
+                    <li><a href="gallery page.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="map-header">
+        <h2>Explore Our Destinations 🌍</h2>
+        <p>Click on any red marker on the map to see details about the location.</p>
+    </div>
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <footer style="margin-top: 4rem;">
+        <p>&copy; 2024 Travel Blog. All rights reserved.</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map, setting the default view (Lat, Lng) and zoom level
+        const map = L.map('map').setView([20.0, 0.0], 2);
+
+        // Load the beautiful map tiles from OpenStreetMap
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add custom markers for famous travel destinations
+        const locations = [
+            { name: "Paris, France", coords: [48.8566, 2.3522], desc: "The city of light, famous for the Eiffel Tower." },
+            { name: "New York, USA", coords: [40.7128, -74.0060], desc: "The concrete jungle where dreams are made of." },
+            { name: "Tokyo, Japan", coords: [35.6762, 139.6503], desc: "A bustling metropolis balancing tradition and future." },
+            { name: "Bali, Indonesia", coords: [-8.4095, 115.1889], desc: "Tropical paradise with beaches and coral reefs." },
+            { name: "Machu Picchu, Peru", coords: [-13.1631, -72.5450], desc: "Incan citadel set high in the Andes Mountains." },
+            { name: "Sydney, Australia", coords: [-33.8688, 151.2093], desc: "Famous for its Opera House and beautiful harbour." },
+            { name: "Cape Town, South Africa", coords: [-33.9249, 18.4241], desc: "Port city beneath the imposing Table Mountain." },
+            { name: "Santorini, Greece", coords: [36.3932, 25.4615], desc: "Famous for its white houses and blue domes." },
+            { name: "Taj Mahal, India", coords: [27.1751, 78.0421], desc: "Iconic ivory-white marble mausoleum in Agra." }
+        ];
+
+        // Loop through each location and put a marker on the map
+        locations.forEach(loc => {
+            const marker = L.marker(loc.coords).addTo(map);
+            marker.bindPopup(`<b style="font-size:1.1rem; color:#222;">${loc.name}</b><br><span style="color:#666;">${loc.desc}</span>`);
+        });
+    </script>
+    <script src="darkmode.js"></script>
+</body>
+</html>
