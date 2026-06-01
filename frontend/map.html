@@ -60,10 +60,12 @@
                 <ul>
                     <li><a href="home.html">Home</a></li>
                     <li><a href="destinations.html">Destinations</a></li>
-                    <li><a href="map.html" style="color: aqua;">Travel Map</a></li>
-                    <li><a href="travel stories.html">Stories</a></li>
-                    <li><a href="tips.html">Tips</a></li>
+                    <li><a href="map.html">Map</a></li>
+                    <li><a href="travel stories.html">Travel Stories</a></li>
+                    <li><a href="tips.html">Travel Tips</a></li>
                     <li><a href="gallery page.html">Gallery</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="About.html">About Me</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -94,6 +96,89 @@
             maxZoom: 19,
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
+
+        // Fetch World GeoJSON to make EVERY country clickable
+        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+            .then(res => res.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    style: {
+                        color: '#3498db',
+                        weight: 1,
+                        fillColor: '#3498db',
+                        fillOpacity: 0.1
+                    },
+                    onEachFeature: function (feature, layer) {
+                        layer.on('click', function (e) {
+                            const countryName = feature.properties.name;
+                            
+                            // Show a loading popup immediately
+                            const popup = L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent(`<div style="text-align:center;"><b>${countryName}</b><br>Loading amazing places... ⏳</div>`)
+                                .openOn(map);
+
+                            // Fetch country image and info from Wikipedia API
+                            fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(countryName)}`)
+                                .then(response => response.json())
+                                .then(wikiData => {
+                                    let imgHtml = '';
+                                    if (wikiData.thumbnail && wikiData.thumbnail.source) {
+                                        imgHtml = `<img src="${wikiData.thumbnail.source}" alt="${countryName}" style="width: 100%; max-height: 140px; object-fit: cover; border-radius: 8px; margin: 10px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">`;
+                                    } else {
+                                        imgHtml = `<div style="height:10px;"></div>`;
+                                    }
+                                    
+                                    // Custom famous places for top countries, else use wikipedia summary
+                                    const customPlaces = getFamousPlaces(countryName);
+                                    let descHtml = customPlaces ? customPlaces : (wikiData.extract ? wikiData.extract.substring(0, 120) + '...' : 'Discover beautiful destinations here.');
+                                    
+                                    popup.setContent(`
+                                        <div style="text-align:center; max-width: 250px; font-family: 'Open Sans', sans-serif;">
+                                            <b style="font-size:1.3rem; color:#222; font-family:'Raleway', sans-serif;">${countryName}</b>
+                                            ${imgHtml}
+                                            <p style="color:#555; font-size:0.95rem; line-height:1.4; margin-bottom:10px;">${descHtml}</p>
+                                            <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(countryName)}" target="_blank" style="color: #3498db; font-size: 0.85rem; font-weight:bold; text-decoration:none;">Read more on Wikipedia &rarr;</a>
+                                        </div>
+                                    `);
+                                })
+                                .catch(err => {
+                                    popup.setContent(`<b>${countryName}</b><br>Explore beautiful places here!`);
+                                });
+                        });
+                        
+                        // Hover effect for countries
+                        layer.on('mouseover', function () {
+                            this.setStyle({ fillOpacity: 0.5, color: '#e74c3c', weight: 2 });
+                        });
+                        layer.on('mouseout', function () {
+                            this.setStyle({ fillOpacity: 0.1, color: '#3498db', weight: 1 });
+                        });
+                    }
+                }).addTo(map);
+            });
+
+        // Dictionary of famous places for popular countries
+        function getFamousPlaces(country) {
+            const places = {
+                "India": "<b>Famous Places:</b> Taj Mahal (Agra), Jaipur, Kerala Backwaters, Varanasi, Goa Beaches.",
+                "France": "<b>Famous Places:</b> Eiffel Tower, The Louvre, Mont Saint-Michel, French Riviera.",
+                "United States of America": "<b>Famous Places:</b> Grand Canyon, Statue of Liberty, Yellowstone, Times Square.",
+                "Japan": "<b>Famous Places:</b> Mount Fuji, Kyoto Temples, Tokyo Tower, Osaka Castle.",
+                "Italy": "<b>Famous Places:</b> Colosseum, Venice Canals, Leaning Tower of Pisa, Amalfi Coast.",
+                "Australia": "<b>Famous Places:</b> Sydney Opera House, Great Barrier Reef, Uluru, Gold Coast.",
+                "Brazil": "<b>Famous Places:</b> Christ the Redeemer, Copacabana, Iguazu Falls, Amazon Rainforest.",
+                "China": "<b>Famous Places:</b> Great Wall of China, Forbidden City, Terracotta Army.",
+                "Egypt": "<b>Famous Places:</b> Pyramids of Giza, Sphinx, Valley of the Kings, Nile River.",
+                "United Kingdom": "<b>Famous Places:</b> Big Ben, Stonehenge, Tower of London, Edinburgh Castle.",
+                "Spain": "<b>Famous Places:</b> La Sagrada Familia, Alhambra, Park Güell, Ibiza.",
+                "Greece": "<b>Famous Places:</b> Acropolis of Athens, Santorini, Mykonos, Delphi.",
+                "Thailand": "<b>Famous Places:</b> Grand Palace, Phi Phi Islands, Ayutthaya, Chiang Mai.",
+                "Mexico": "<b>Famous Places:</b> Chichen Itza, Cancun Beaches, Teotihuacan, Tulum.",
+                "Canada": "<b>Famous Places:</b> Niagara Falls, Banff National Park, CN Tower, Whistler."
+            };
+            return places[country] || null;
+        }
 
         // Add custom markers for famous travel destinations
         const locations = [
