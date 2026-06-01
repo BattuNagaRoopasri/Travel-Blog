@@ -242,4 +242,75 @@
      position: relative;
      bottom: 0;
      width: 100%;
- }
+}
+
+/* --- Preloader --- */
+#preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #f4f7f6;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+#preloader i {
+    font-size: 3rem;
+    color: #222;
+    animation: flyAirplane 2s infinite ease-in-out;
+}
+
+@keyframes flyAirplane {
+    0% { transform: translate(-100px, 100px) rotate(-45deg) scale(0.5); opacity: 0; }
+    50% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1.5); }
+    100% { transform: translate(100px, -100px) rotate(45deg) scale(0.5); opacity: 0; }
+}
+
+/* --- Dark Mode --- */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .blog-section {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .blog-post {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .box {
+    border-color: #444;
+}
+
+body.dark-mode .content {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+body.dark-mode h2,
+body.dark-mode .blog-post h3 {
+    color: #ffffff;
+}
+
+body.dark-mode footer {
+    background: #111;
+    color: #ccc;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #fff;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.2);
+}
