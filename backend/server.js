@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -8,6 +9,24 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+// Enable CORS for the frontend (Netlify) and localhost during development
+const allowedOrigins = [
+    process.env.FRONTEND_URL || 'https://travelblogp.netlify.app',
+    'http://localhost:3000',
+    'http://127.0.0.1:5500'
+];
+
+app.use(cors({
+    origin: function(origin, callback) {
+        if (!origin) return callback(null, true); // allow non-browser tools like curl/postman
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS policy: This origin is not allowed'));
+        }
+    }
+}));
 
 // Serve static files from the frontend directory
 app.use(express.static(path.join(__dirname, '../frontend')));
