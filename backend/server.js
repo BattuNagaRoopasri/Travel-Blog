@@ -8,7 +8,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
-app.use(express.json());
+// Capture raw body for debugging and parse JSON
+app.use(express.json({
+    verify: (req, res, buf) => {
+        try {
+            req.rawBody = buf.toString();
+        } catch (e) {
+            req.rawBody = '';
+        }
+    }
+}));
+
+// Also parse URL-encoded bodies (in case the frontend sends form-encoded data)
+app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS for the frontend (Netlify) and localhost during development
 const allowedOrigins = [
@@ -75,6 +87,10 @@ app.get('/api/destinations', (req, res) => {
 app.post('/api/contact', async (req, res) => {
     const { name, email, message } = req.body;
 
+    // Debug log - will show in Render logs when deployed
+    console.log('Contact request body:', req.body);
+    console.log('Contact rawBody:', req.rawBody && req.rawBody.slice(0, 1000));
+
     if (!name || !email || !message) {
         return res.status(400).json({ error: 'Please provide name, email, and message.' });
     }
@@ -107,4 +123,15 @@ app.post('/api/contact', async (req, res) => {
 // Start the server
 app.listen(PORT, () => {
     console.log(`Backend server is running on http://localhost:${PORT}`);
+});
+
+// Error handler for JSON parse errors and other middleware errors
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err && (err.stack || err));
+    if (err && err.type === 'entity.parse.failed') {
+        return res.status(400).json({ error: 'Invalid JSON payload' });
+    }
+    // If headers already sent, delegate
+    if (res.headersSent) return next(err);
+    res.status(500).json({ error: 'Internal server error' });
 });
