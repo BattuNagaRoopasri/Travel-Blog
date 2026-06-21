@@ -39,11 +39,7 @@
             margin-top: 10px;
         }
         
-        /* Dark mode support */
-        body.dark-mode { background-color: #121212; color: #fff; }
-        body.dark-mode .map-header h2 { color: #fff; }
-        body.dark-mode .map-header p { color: #ccc; }
-        body.dark-mode #map-container { border-color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
         
         /* Nav style override for minimal header */
         .minimal-header {
@@ -199,6 +195,6 @@
             marker.bindPopup(`<b style="font-size:1.1rem; color:#222;">${loc.name}</b><br><span style="color:#666;">${loc.desc}</span>`);
         });
     </script>
-    <script src="darkmode.js"></script>
+    
 </body>
 </html>
