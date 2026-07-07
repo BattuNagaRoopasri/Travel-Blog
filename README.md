@@ -19,6 +19,7 @@
 
 - 🧭 **Home Page** with introduction and featured destinations
 - 📖 **Travel Stories** to share personal experiences
+- 🗺️ **Interactive Map** Page to explore destinations, locations, and travel routes visually
 - 🌆 **Image Gallery** with JavaScript-enhanced interaction
 - 📌 **Travel Tips** for smart and safe journeys
 - 📝 **Contact Form** for visitor messages
